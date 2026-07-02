@@ -83,7 +83,75 @@ This project demonstrates several software engineering concepts:
 ```
 
 ---
+## How to Build and Run
 
+### 1. Install dependencies
+
+On Ubuntu/Linux:
+
+```bash
+sudo apt update
+sudo apt install build-essential pkg-config libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
+```
+
+### 2. Clone the repository
+
+```bash
+git clone https://github.com/Akshatvs/Ecosystem_lifesimulation.git
+cd Ecosystem_lifesimulation
+```
+
+### 3. Required assets
+
+The project expects the following folders at the project root:
+
+```text
+IMAGES/
+SONS/
+```
+
+Required image files:
+
+```text
+IMAGES/NIGHTREIGN.png
+IMAGES/Catacombs.png
+IMAGES/Oldcastle.png
+IMAGES/Inventaire.png
+```
+
+Required sound files:
+
+```text
+SONS/menu.mp3
+SONS/selection.mp3
+SONS/Catacombs.mp3
+SONS/Oldcastle.mp3
+```
+
+### 4. Compile
+
+```bash
+make
+```
+
+### 5. Run
+
+```bash
+make run
+```
+
+or:
+
+```bash
+./ecosystem-simulation
+```
+
+### 6. Clean build files
+
+```bash
+make clean
+
+```
 ## Controls
 
 | Key | Action |
