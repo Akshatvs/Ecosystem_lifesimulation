@@ -5,7 +5,7 @@
 #include "pixel_art.h"
 #include "config.h"
 
-static void draw_text(
+void draw_text(
     SDL_Renderer *renderer,
     TTF_Font *font,
     const char *text,
