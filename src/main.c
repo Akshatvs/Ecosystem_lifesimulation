@@ -11,7 +11,17 @@
 #include "simulation.h"
 #include "rendering.h"
 
-#define FONT_PATH "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+#define FONT_PATH "C:/Windows/Fonts/arial.ttf"
+
+#define MENU_BACKGROUND_PATH "assets/IMAGES/NIGHTREIGN.png"
+#define CATACOMBS_BACKGROUND_PATH "assets/IMAGES/Catacombs.png"
+#define OLDCASTLE_BACKGROUND_PATH "assets/IMAGES/Oldcastle.png"
+#define INVENTORY_BACKGROUND_PATH "assets/IMAGES/Inventaire.png"
+
+#define MENU_MUSIC_PATH "assets/SONS/menu.mp3"
+#define SELECTION_SOUND_PATH "assets/SONS/selection.mp3"
+#define CATACOMBS_MUSIC_PATH "assets/SONS/Catacombs.mp3"
+#define OLDCASTLE_MUSIC_PATH "assets/SONS/Oldcastle.mp3"
 
 void draw_menu_text(
     SDL_Renderer *renderer,
@@ -296,14 +306,17 @@ Mix_Music *load_biome_music(int biome)
 {
     if (biome == 0)
     {
-        return Mix_LoadMUS("SONS/Catacombs.mp3");
+        return Mix_LoadMUS(CATACOMBS_MUSIC_PATH);
     }
 
-    return Mix_LoadMUS("SONS/Oldcastle.mp3");
+    return Mix_LoadMUS(OLDCASTLE_MUSIC_PATH);
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
+    (void)argc;
+    (void)argv;
+
     Simulation simulation;
 
     SDL_Window *window = NULL;
@@ -412,10 +425,10 @@ int main(void)
         return 1;
     }
 
-    menu_background = load_texture(renderer, "IMAGES/NIGHTREIGN.png");
-    catacombs_background = load_texture(renderer, "IMAGES/Catacombs.png");
-    oldcastle_background = load_texture(renderer, "IMAGES/Oldcastle.png");
-    inventory_background = load_texture(renderer, "IMAGES/Inventaire.png");
+    menu_background = load_texture(renderer, MENU_BACKGROUND_PATH);
+    catacombs_background = load_texture(renderer, CATACOMBS_BACKGROUND_PATH);
+    oldcastle_background = load_texture(renderer, OLDCASTLE_BACKGROUND_PATH);
+    inventory_background = load_texture(renderer, INVENTORY_BACKGROUND_PATH);
 
     if (
         menu_background == NULL ||
@@ -437,8 +450,18 @@ int main(void)
         program_running = 0;
     }
 
-    menu_music = Mix_LoadMUS("SONS/menu.mp3");
-    selection_sound = Mix_LoadWAV("SONS/selection.mp3");
+    menu_music = Mix_LoadMUS(MENU_MUSIC_PATH);
+    selection_sound = Mix_LoadWAV(SELECTION_SOUND_PATH);
+
+    if (menu_music == NULL)
+    {
+        printf("Failed to load menu music %s: %s\n", MENU_MUSIC_PATH, Mix_GetError());
+    }
+
+    if (selection_sound == NULL)
+    {
+        printf("Failed to load selection sound %s: %s\n", SELECTION_SOUND_PATH, Mix_GetError());
+    }
 
     if (menu_music != NULL)
     {
@@ -504,6 +527,11 @@ int main(void)
                         }
 
                         biome_music = load_biome_music(biome);
+
+                        if (biome_music == NULL)
+                        {
+                            printf("Failed to load biome music: %s\n", Mix_GetError());
+                        }
 
                         if (biome_music != NULL)
                         {
